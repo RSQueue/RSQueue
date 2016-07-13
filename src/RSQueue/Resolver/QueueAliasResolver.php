@@ -15,8 +15,6 @@
 
 namespace RSQueue\Resolver;
 
-use RSQueue\Exception\InvalidAliasException;
-
 /**
  * Abstract service.
  *
@@ -49,8 +47,6 @@ class QueueAliasResolver
      * @param array $queueAlias Queue alias array
      *
      * @return array valid queueName array
-     *
-     * @throws InvalidAliasException If any queueAlias is not defined
      */
     public function getQueues(array $queueAlias) : array
     {
@@ -68,8 +64,6 @@ class QueueAliasResolver
      * @param string $queueAlias Queue alias
      *
      * @return string real queue name
-     *
-     * @throws InvalidAliasException If queueAlias is not defined
      */
     public function getQueue($queueAlias) : string
     {

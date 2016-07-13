@@ -22,7 +22,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use RSQueue\Command\Abstracts\AbstractRSQueueCommand;
 use RSQueue\Event\RSQueueSubscriberEvent;
-use RSQueue\Exception\InvalidAliasException;
 use RSQueue\Exception\MethodNotFoundException;
 use RSQueue\Resolver\QueueAliasResolver;
 use RSQueue\RSQueueEvents;
@@ -120,8 +119,6 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
      * @param OutputInterface $output
      *
      * @return int
-     *
-     * @throws InvalidAliasException If any alias is not defined
      */
     protected function execute(
         InputInterface $input,

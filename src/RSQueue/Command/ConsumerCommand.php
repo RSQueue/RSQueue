@@ -20,7 +20,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use RSQueue\Command\Abstracts\AbstractRSQueueCommand;
-use RSQueue\Exception\InvalidAliasException;
 use RSQueue\Exception\MethodNotFoundException;
 use RSQueue\Services\Consumer;
 
@@ -135,8 +134,6 @@ abstract class ConsumerCommand extends AbstractRSQueueCommand
      * @param  OutputInterface $output An OutputInterface instance
      *                                  
      * @return int
-     *
-     * @throws InvalidAliasException If any alias is not defined
      */
     protected function execute(
         InputInterface $input,
