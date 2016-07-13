@@ -51,13 +51,6 @@ class RSQueuePublisherEventTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      *
-     * Channel Alias
-     */
-    private $channelAlias = 'channelAlias';
-
-    /**
-     * @var string
-     *
      * Channel Name
      */
     private $channelName = 'channelName';
@@ -78,7 +71,6 @@ class RSQueuePublisherEventTest extends \PHPUnit_Framework_TestCase
         $this->rsqueuePublisherEvent = new RSQueuePublisherEvent(
             $this->payload,
             $this->payloadSerialized,
-            $this->channelAlias,
             $this->channelName,
             $this->redis
         );
@@ -114,17 +106,6 @@ class RSQueuePublisherEventTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $this->rsqueuePublisherEvent->getChannelName(),
             $this->channelName
-        );
-    }
-
-    /**
-     * Testing channelalias getter.
-     */
-    public function testGetChannelAlias()
-    {
-        $this->assertEquals(
-            $this->rsqueuePublisherEvent->getChannelAlias(),
-            $this->channelAlias
         );
     }
 

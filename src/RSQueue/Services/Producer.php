@@ -16,7 +16,6 @@
 namespace RSQueue\Services;
 
 use RSQueue\Event\RSQueueProducerEvent;
-use RSQueue\Exception\InvalidAliasException;
 use RSQueue\RSQueueEvents;
 use RSQueue\Services\Abstracts\AbstractService;
 
@@ -32,8 +31,6 @@ class Producer extends AbstractService
      * @param mixed  $payload    Data to enqueue
      *
      * @return Producer self Object
-     *
-     * @throws InvalidAliasException If any alias is not defined
      */
     public function produce($queueAlias, $payload)
     {
@@ -58,7 +55,6 @@ class Producer extends AbstractService
         $producerEvent = new RSQueueProducerEvent(
             $payload,
             $payloadSerialized,
-            $queueAlias,
             $queue,
             $this->redis
         );

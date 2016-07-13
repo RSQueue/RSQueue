@@ -16,7 +16,6 @@
 namespace RSQueue\Services;
 
 use RSQueue\Event\RSQueuePublisherEvent;
-use RSQueue\Exception\InvalidAliasException;
 use RSQueue\RSQueueEvents;
 use RSQueue\Services\Abstracts\AbstractService;
 
@@ -32,8 +31,6 @@ class Publisher extends AbstractService
      * @param mixed  $payload      Data to publish
      *
      * @return Producer self Object
-     *
-     * @throws InvalidAliasException If any alias is not defined
      */
     public function publish($channelAlias, $payload)
     {
@@ -58,7 +55,6 @@ class Publisher extends AbstractService
         $publisherEvent = new RSQueuePublisherEvent(
             $payload,
             $payloadSerialized,
-            $channelAlias,
             $channel,
             $this->redis
         );

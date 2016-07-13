@@ -16,7 +16,6 @@
 namespace RSQueue\Services;
 
 use RSQueue\Event\RSQueueConsumerEvent;
-use RSQueue\Exception\InvalidAliasException;
 use RSQueue\RSQueueEvents;
 use RSQueue\Services\Abstracts\AbstractService;
 
@@ -39,8 +38,6 @@ class Consumer extends AbstractService
      * @param int   $timeout    Timeout. By default, 0
      *
      * @return mixed payload unserialized
-     *
-     * @throws InvalidAliasException If any alias is not defined
      */
     public function consume($queueAlias, $timeout = 0)
     {
@@ -67,7 +64,7 @@ class Consumer extends AbstractService
         $payload = $this->serializer->revert($payloadSerialized);
         $givenQueueAlias = $this
             ->queueAliasResolver
-            ->getQueueAlias($givenQueue);
+            ->getQueue($givenQueue);
 
         /*
          * Dispatching consumer event...
@@ -75,7 +72,6 @@ class Consumer extends AbstractService
         $consumerEvent = new RSQueueConsumerEvent(
             $payload,
             $payloadSerialized,
-            $givenQueueAlias,
             $givenQueue,
             $this->redis
         );

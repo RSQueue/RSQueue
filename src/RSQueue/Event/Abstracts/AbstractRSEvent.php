@@ -28,21 +28,21 @@ abstract class AbstractRSEvent extends Event
      *
      * Payload
      */
-    protected $payload;
+    private $payload;
 
     /**
      * @var string
      *
      * Payload serialized
      */
-    protected $payloadSerialized;
+    private $payloadSerialized;
 
     /**
      * @var Redis
      *
      * Redis instance
      */
-    protected $redis;
+    private $redis;
 
     /**
      * Construct method.

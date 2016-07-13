@@ -25,30 +25,21 @@ abstract class AbstractRSChannelEvent extends AbstractRSEvent
     /**
      * @var string
      *
-     * Channel alias
-     */
-    protected $channelAlias;
-
-    /**
-     * @var string
-     *
      * Real channel name
      */
-    protected $channelName;
+    private $channelName;
 
     /**
      * Construct method.
      *
      * @param mixed  $payload
      * @param string $payloadSerialized
-     * @param string $channelAlias
      * @param string $channelName
      * @param Redis  $redis
      */
     public function __construct(
         $payload,
         string $payloadSerialized,
-        string $channelAlias,
         string $channelName,
         Redis $redis
     ) {
@@ -58,18 +49,7 @@ abstract class AbstractRSChannelEvent extends AbstractRSEvent
             $redis
         );
 
-        $this->channelAlias = $channelAlias;
         $this->channelName = $channelName;
-    }
-
-    /**
-     * Return channel alias.
-     *
-     * @return string Channel alias
-     */
-    public function getChannelAlias()
-    {
-        return $this->channelAlias;
     }
 
     /**

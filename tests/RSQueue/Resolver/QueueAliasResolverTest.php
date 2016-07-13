@@ -15,7 +15,6 @@
 
 namespace RSQueue\Tests\Resolver;
 
-use RSQueue\Exception\InvalidAliasException;
 use RSQueue\Resolver\QueueAliasResolver;
 
 /**
@@ -50,32 +49,6 @@ class QueueAliasResolverTest extends \PHPUnit_Framework_TestCase
         $queueAliasResolver = new QueueAliasResolver($this->queues);
         $this->assertEquals($queueAliasResolver->getQueue('myqueue1'), $this->queues['myqueue1']);
         $this->assertEquals($queueAliasResolver->getQueue('myqueue2'), $this->queues['myqueue2']);
-    }
-
-    /**
-     * Test check method.
-     */
-    public function testCheckQueue()
-    {
-        $queueAliasResolver = new QueueAliasResolver($this->queues);
-        $this->assertEquals($queueAliasResolver->checkQueue('myqueue1'), true);
-
-        try {
-            $queueAliasResolver->checkQueue('myqueue3');
-        } catch (InvalidAliasException $expected) {
-            return;
-        }
-
-        $this->fail('An expected InvalidAliasException exception has not been raised.');
-    }
-
-    /**
-     * Test get queue alias method.
-     */
-    public function testGetQueueAlias()
-    {
-        $queueAliasResolver = new QueueAliasResolver($this->queues);
-        $this->assertEquals('myqueue1', $queueAliasResolver->getQueueAlias($this->queues['myqueue1']));
-        $this->assertEquals('myqueue2', $queueAliasResolver->getQueueAlias($this->queues['myqueue2']));
+        $this->assertEquals($queueAliasResolver->getQueue('myqueue3'), 'myqueue3');
     }
 }

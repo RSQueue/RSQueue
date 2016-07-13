@@ -27,7 +27,6 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsume()
     {
-        $queueAlias = 'alias';
         $queue = 'queue';
         $timeout = 0;
         $payload = ['engonga'];
@@ -52,21 +51,14 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
 
         $queueAliasResolver = $this
             ->getMockBuilder('RSQueue\Resolver\QueueAliasResolver')
-            ->setMethods(['getQueue', 'getQueueAlias'])
+            ->setMethods(['getQueue'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $queueAliasResolver
-            ->expects($this->once())
             ->method('getQueue')
-            ->with($this->equalTo($queueAlias))
-            ->will($this->returnValue($queue));
-
-        $queueAliasResolver
-            ->expects($this->once())
-            ->method('getQueueAlias')
             ->with($this->equalTo($queue))
-            ->will($this->returnValue($queueAlias));
+            ->will($this->returnValue($queue));
 
         $eventDispatcher = $this
             ->createMock('Symfony\Component\EventDispatcher\EventDispatcher', ['dispatch']);
@@ -76,9 +68,9 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch');
 
         $consumer = new Consumer($eventDispatcher, $redis, $queueAliasResolver, $serializer);
-        list($givenQueueAlias, $givenPayload) = $consumer->consume($queueAlias, $timeout);
+        list($givenQueueAlias, $givenPayload) = $consumer->consume($queue, $timeout);
 
-        $this->assertEquals($queueAlias, $givenQueueAlias);
+        $this->assertEquals($queue, $givenQueueAlias);
         $this->assertEquals($payload, $givenPayload);
     }
 }

@@ -34,13 +34,6 @@ class QueueAliasResolver
     private $queues;
 
     /**
-     * @var array
-     *
-     * Queue aliases. Key is queue real name, value is alias
-     */
-    private $queueAliases;
-
-    /**
      * Construct method.
      *
      * @param array $queues Queue names array
@@ -48,7 +41,6 @@ class QueueAliasResolver
     public function __construct(array $queues)
     {
         $this->queues = $queues;
-        $this->queueAliases = array_flip($queues);
     }
 
     /**
@@ -81,38 +73,6 @@ class QueueAliasResolver
      */
     public function getQueue($queueAlias) : string
     {
-        $this->checkQueue($queueAlias);
-
-        return $this->queues[$queueAlias];
-    }
-
-    /**
-     * Check if given queue alias can be resolved.
-     *
-     * @param string $queueAlias Queue alias
-     *
-     * @return bool queue alias can be resolved
-     *
-     * @throws InvalidAliasException If queueAlias is not defined
-     */
-    public function checkQueue($queueAlias) : bool
-    {
-        if (!isset($this->queues[$queueAlias])) {
-            throw new InvalidAliasException();
-        }
-
-        return true;
-    }
-
-    /**
-     * Get alias given queue name.
-     *
-     * @param string $queue Queue name
-     *
-     * @return string Queue alias if exists
-     */
-    public function getQueueAlias($queue) : string
-    {
-        return $this->queueAliases[$queue];
+        return $this->queues[$queueAlias] ?? $queueAlias;
     }
 }

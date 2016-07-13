@@ -88,6 +88,8 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
         EventDispatcherInterface $eventDispatcher,
         Redis $redis
     ) {
+        parent::__construct();
+
         $this->serializer = $serializer;
         $this->queueAliasResolver = $queueAliasResolver;
         $this->eventDispatcher = $eventDispatcher;
@@ -146,7 +148,7 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
 
                 $channelAlias = $this
                     ->queueAliasResolver
-                    ->getQueueAlias($channel);
+                    ->getQueue($channel);
 
                 $method = $this->methods[$channelAlias];
                 $payload = $this

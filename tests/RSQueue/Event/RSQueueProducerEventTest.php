@@ -51,13 +51,6 @@ class RSQueueProducerEventTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      *
-     * Queue Alias
-     */
-    private $queueAlias = 'queueAlias';
-
-    /**
-     * @var string
-     *
      * Queue Name
      */
     private $queueName = 'queueName';
@@ -78,7 +71,6 @@ class RSQueueProducerEventTest extends \PHPUnit_Framework_TestCase
         $this->rsqueueProducerEvent = new RSQueueProducerEvent(
             $this->payload,
             $this->payloadSerialized,
-            $this->queueAlias,
             $this->queueName,
             $this->redis
         );
@@ -114,17 +106,6 @@ class RSQueueProducerEventTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $this->rsqueueProducerEvent->getQueueName(),
             $this->queueName
-        );
-    }
-
-    /**
-     * Testing queuealias getter.
-     */
-    public function testGetQueueAlias()
-    {
-        $this->assertEquals(
-            $this->rsqueueProducerEvent->getQueueAlias(),
-            $this->queueAlias
         );
     }
 
