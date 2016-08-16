@@ -12,6 +12,7 @@ return Symfony\CS\Config\Config::create()
         '-empty_return',
         '-phpdoc_var_without_name',
         '-phpdoc_to_comment',
+        '-single_line_after_imports',
     ))
     ->finder(
         Symfony\CS\Finder\DefaultFinder::create()
