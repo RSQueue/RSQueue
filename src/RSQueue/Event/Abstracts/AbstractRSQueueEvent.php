@@ -15,8 +15,6 @@
 
 namespace RSQueue\Event\Abstracts;
 
-use Redis;
-
 /**
  * Abstract queue event.
  */
@@ -35,13 +33,13 @@ abstract class AbstractRSQueueEvent extends AbstractRSEvent
      * @param mixed  $payload           Payload
      * @param string $payloadSerialized Payload serialized
      * @param string $queueName         Queue name
-     * @param Redis  $redis             Redis instance
+     * @param \Redis|\Predis\Client  $redis             Redis instance
      */
     public function __construct(
         $payload,
         string $payloadSerialized,
         string $queueName,
-        Redis $redis
+        $redis
     ) {
         parent::__construct(
             $payload,

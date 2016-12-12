@@ -50,7 +50,7 @@ class Consumer extends AbstractService
                 ->getQueue($queueAlias);
 
         $payloadArray = $this
-            ->redis
+            ->redisAdapter
             ->blPop(
                 $queues,
                 $timeout
@@ -73,7 +73,7 @@ class Consumer extends AbstractService
             $payload,
             $payloadSerialized,
             $givenQueue,
-            $this->redis
+            $this->redisAdapter->getClient()
         );
 
         $this

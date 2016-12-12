@@ -15,7 +15,7 @@
 
 namespace RSQueue\Services\Abstracts;
 
-use Redis;
+use RSQueue\Redis\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use RSQueue\Resolver\QueueAliasResolver;
@@ -36,11 +36,11 @@ class AbstractService
     protected $eventDispatcher;
 
     /**
-     * @var Redis
+     * @var AdapterInterface
      *
      * Redis client used to interact with redis service
      */
-    protected $redis;
+    protected $redisAdapter;
 
     /**
      * @var QueueAliasResolver
@@ -58,7 +58,7 @@ class AbstractService
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param Redis                    $redis
+     * @param AdapterInterface                    $redisAdapter
      * @param QueueAliasResolver       $queueAliasResolver
      * @param Serializer               $serializer
      *
@@ -66,12 +66,12 @@ class AbstractService
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        Redis $redis,
+        AdapterInterface $redisAdapter,
         QueueAliasResolver $queueAliasResolver,
         Serializer $serializer
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->redis = $redis;
+        $this->redisAdapter = $redisAdapter;
         $this->queueAliasResolver = $queueAliasResolver;
         $this->serializer = $serializer;
     }

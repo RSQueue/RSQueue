@@ -15,7 +15,7 @@
 
 namespace RSQueue\Command;
 
-use Redis;
+use RSQueue\Redis\AdapterInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -48,26 +48,25 @@ abstract class PSubscriberCommand extends AbstractRSQueueCommand
     private $serializer;
 
     /**
-     * @var Redis
+     * @var AdapterInterface
      *
-     * Redis
      */
-    private $redis;
+    private $redisAdapter;
 
     /**
      * PSubscriberCommand constructor.
      *
      * @param Serializer $serializer
-     * @param Redis      $redis
+     * @param AdapterInterface $redisAdapter
      */
     public function __construct(
         Serializer $serializer,
-        Redis $redis
+        AdapterInterface $redisAdapter
     ) {
         parent::__construct();
 
         $this->serializer = $serializer;
-        $this->redis = $redis;
+        $this->redisAdapter = $redisAdapter;
     }
 
     /**
@@ -108,7 +107,7 @@ abstract class PSubscriberCommand extends AbstractRSQueueCommand
         }
 
         $this
-            ->redis
+            ->redisAdapter
             ->psubscribe($patterns,
                 function ($redis, $pattern, $channel, $payloadSerialized) use ($input, $output) {
 

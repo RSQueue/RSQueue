@@ -15,10 +15,15 @@
 
 namespace RSQueue\Factory;
 
-use Redis;
+use RSQueue\Exception\UnknownDriverException;
+use RSQueue\Redis\AdapterInterface;
+use RSQueue\Redis\PredisClientAdapter;
+use RSQueue\Redis\RedisAdapter;
 
 /**
- * Interface for any kind of serialization.
+ * Return an AdapterInterface switch Redis driver
+ * Class RedisFactory
+ * @package RSQueue\Factory
  */
 class RedisFactory
 {
@@ -42,19 +47,53 @@ class RedisFactory
     }
 
     /**
-     * Generate new Predis instance.
-     *
-     * @return Redis
+     * Generate a AdapterInterface instance
+     * @return AdapterInterface
+     * @throws UnknownDriverException
      */
-    public function get()
+    public function get() : AdapterInterface
     {
-        $redis = new Redis();
-        $redis->connect($this->config['host'], $this->config['port']);
-        $redis->setOption(Redis::OPT_READ_TIMEOUT, -1);
-        if ($this->config['database']) {
-            $redis->select($this->config['database']);
+        if ($this->config['driver'] === 'predis') {
+            $redis = $this->getPredisClient($this->config);
+            return new PredisClientAdapter($redis);
+        } elseif($this->config['driver'] === 'phpredis') {
+            $redis = $this->getPHPRedisClient($this->config);
+            return new RedisAdapter($redis);
+        }else{
+            throw new UnknownDriverException(sprintf("Unknown driver '%s'",$this->config['driver']));
         }
+    }
 
+    /**
+     * @param array $config
+     * @return \Redis
+     */
+    protected function getPHPRedisClient(array $config) : \Redis
+    {
+        $redis = new \Redis;
+        $redis->connect($config['host'], $config['port']);
+        $redis->setOption(\Redis::OPT_READ_TIMEOUT, -1);
+        if ($config['database']) {
+            $redis->select($config['database']);
+        }
         return $redis;
+    }
+
+    /**
+     * @param array $config
+     * @return \Predis\Client
+     */
+    protected function getPredisClient(array $config) : \Predis\Client
+    {
+        $connectionParameters = array(
+            'scheme' => 'tcp',
+            'host' => $config['host'],
+            'port' => $config['port'],
+            'read_write_timeout' => -1
+        );
+        if ($config['database']) {
+            $connectionParameters['database'] = $config['database'];
+        }
+       return new \Predis\Client($connectionParameters);
     }
 }

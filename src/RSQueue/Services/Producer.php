@@ -43,10 +43,10 @@ class Producer extends AbstractService
             ->apply($payload);
 
         $this
-            ->redis
+            ->redisAdapter
             ->rpush(
                 $queue,
-                $payloadSerialized
+                [$payloadSerialized]
             );
 
         /*
@@ -56,7 +56,7 @@ class Producer extends AbstractService
             $payload,
             $payloadSerialized,
             $queue,
-            $this->redis
+            $this->redisAdapter
         );
 
         $this
