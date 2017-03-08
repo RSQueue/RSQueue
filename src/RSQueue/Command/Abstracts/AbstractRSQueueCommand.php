@@ -68,4 +68,11 @@ abstract class AbstractRSQueueCommand extends Command implements RSQueueCommandI
     {
         return false;
     }
+
+    /**
+     * Before die method.
+     */
+    protected function beforeDie()
+    {
+    }
 }
