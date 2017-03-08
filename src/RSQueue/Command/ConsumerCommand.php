@@ -177,6 +177,8 @@ abstract class ConsumerCommand extends AbstractRSQueueCommand
             sleep($sleep);
         }
 
+        $this->beforeDie();
+
         return 0;
     }
 }

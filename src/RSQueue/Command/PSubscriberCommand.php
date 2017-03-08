@@ -125,6 +125,8 @@ abstract class PSubscriberCommand extends AbstractRSQueueCommand
                 $this->$method($input, $output, $payload);
             });
 
+        $this->beforeDie();
+
         return 0;
     }
 }

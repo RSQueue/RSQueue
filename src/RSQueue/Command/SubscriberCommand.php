@@ -184,6 +184,8 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
                 );
             });
 
+        $this->beforeDie();
+
         return 0;
     }
 }
