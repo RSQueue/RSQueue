@@ -16,6 +16,7 @@
 namespace RSQueue\Command;
 
 use Redis;
+use RSQueue\Redis\AdapterInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -67,9 +68,9 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
     private $eventDispatcher;
 
     /**
-     * @var Redis
+     * @var AdapterInterface
      *
-     * Redis
+     * Redis AdapterInterface
      */
     private $redis;
 
@@ -79,13 +80,13 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
      * @param Serializer               $serializer
      * @param QueueAliasResolver       $queueAliasResolver
      * @param EventDispatcherInterface $eventDispatcher
-     * @param Redis                    $redis
+     * @param AdapterInterface         $redis
      */
     public function __construct(
         Serializer $serializer,
         QueueAliasResolver $queueAliasResolver,
         EventDispatcherInterface $eventDispatcher,
-        Redis $redis
+        AdapterInterface $redis
     ) {
         parent::__construct();
 

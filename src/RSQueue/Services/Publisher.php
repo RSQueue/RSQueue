@@ -43,7 +43,7 @@ class Publisher extends AbstractService
             ->apply($payload);
 
         $this
-            ->redis
+            ->redisAdapter
             ->publish(
                 $channel,
                 $payloadSerialized
@@ -56,7 +56,7 @@ class Publisher extends AbstractService
             $payload,
             $payloadSerialized,
             $channel,
-            $this->redis
+            $this->redisAdapter
         );
 
         $this

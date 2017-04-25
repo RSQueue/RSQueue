@@ -32,7 +32,7 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
         $payload = ['engonga'];
 
         $redis = $this
-            ->createMock('\Redis', ['blPop']);
+            ->createMock('RSQueue\Redis\AdapterInterface');
 
         $redis
             ->expects($this->once())
