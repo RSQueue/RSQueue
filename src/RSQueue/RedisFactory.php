@@ -75,7 +75,7 @@ class RedisFactory
     {
         $redis = new Redis();
         $redis->connect($this->config['host'], $this->config['port']);
-        $redis->setOption(Redis::OPT_READ_TIMEOUT, -1);
+        $redis->setOption(Redis::OPT_READ_TIMEOUT, '-1');
         if ($this->config['database']) {
             $redis->select($this->config['database']);
         }
