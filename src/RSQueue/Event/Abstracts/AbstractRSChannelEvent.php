@@ -43,7 +43,7 @@ abstract class AbstractRSChannelEvent extends AbstractRSEvent
         $payload,
         string $payloadSerialized,
         string $channelName,
-        Redis $redis
+        $redis
     ) {
         parent::__construct(
             $payload,
