@@ -3,7 +3,7 @@
 /*
  * This file is part of the RSQueue library
  *
- * Copyright (c) 2016 Marc Morera
+ * Copyright (c) 2016 - now() Marc Morera
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,19 +13,20 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
+declare(strict_types=1);
+
 namespace RSQueue\Command;
 
 use Redis;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
 use RSQueue\Command\Abstracts\AbstractRSQueueCommand;
 use RSQueue\Event\RSQueueSubscriberEvent;
 use RSQueue\Exception\MethodNotFoundException;
 use RSQueue\Resolver\QueueAliasResolver;
 use RSQueue\RSQueueEvents;
 use RSQueue\Serializer\Serializer;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Abstract Subscriber command.
@@ -123,7 +124,7 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
     protected function execute(
         InputInterface $input,
         OutputInterface $output
-    ) : int {
+    ): int {
         /*
          * Define all channels this command must listen to
          */
@@ -142,20 +143,19 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
             ->redis
             ->subscribe($channels,
                 function ($redis, $channel, $payloadSerialized) use ($input, $output) {
-
-                $channelAlias = $this
+                    $channelAlias = $this
                     ->queueAliasResolver
                     ->getQueue($channel);
 
-                $method = $this->methods[$channelAlias];
-                $payload = $this
+                    $method = $this->methods[$channelAlias];
+                    $payload = $this
                     ->serializer
                     ->revert($payloadSerialized);
 
-                /*
-                 * Dispatching subscriber event...
-                 */
-                $subscriberEvent = new RSQueueSubscriberEvent(
+                    /*
+                     * Dispatching subscriber event...
+                     */
+                    $subscriberEvent = new RSQueueSubscriberEvent(
                     $payload,
                     $payloadSerialized,
                     $channelAlias,
@@ -163,26 +163,26 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
                     $redis
                 );
 
-                $this
+                    $this
                     ->eventDispatcher
                     ->dispatch(
                         RSQueueEvents::RSQUEUE_SUBSCRIBER,
                         $subscriberEvent
                     );
 
-                /*
-                 * All custom methods must have these parameters
-                 *
-                 * InputInterface  $input   An InputInterface instance
-                 * OutputInterface $output  An OutputInterface instance
-                 * Mixed           $payload Payload
-                 */
-                $this->$method(
+                    /*
+                     * All custom methods must have these parameters
+                     *
+                     * InputInterface  $input   An InputInterface instance
+                     * OutputInterface $output  An OutputInterface instance
+                     * Mixed           $payload Payload
+                     */
+                    $this->$method(
                     $input,
                     $output,
                     $payload
                 );
-            });
+                });
 
         $this->beforeDie();
 

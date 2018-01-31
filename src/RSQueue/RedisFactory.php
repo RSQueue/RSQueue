@@ -3,7 +3,7 @@
 /*
  * This file is part of the RSQueue library
  *
- * Copyright (c) 2016 Marc Morera
+ * Copyright (c) 2016 - now() Marc Morera
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,6 +12,8 @@
  *
  * @author Marc Morera <yuhu@mmoreram.com>
  */
+
+declare(strict_types=1);
 
 namespace RSQueue;
 
@@ -59,9 +61,9 @@ class RedisFactory
      *
      * @return RedisCluster
      */
-    private function createCluster() : RedisCluster
+    private function createCluster(): RedisCluster
     {
-        return new RedisCluster(null, [$this->config['host'] . ':' . $this->config['port']]);
+        return new RedisCluster(null, [$this->config['host'].':'.$this->config['port']]);
     }
 
     /**
@@ -69,7 +71,7 @@ class RedisFactory
      *
      * @return Redis
      */
-    private function createSimple() : Redis
+    private function createSimple(): Redis
     {
         $redis = new Redis();
         $redis->connect($this->config['host'], $this->config['port']);

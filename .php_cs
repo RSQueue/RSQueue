@@ -1,22 +1,14 @@
 <?php
 
-return Symfony\CS\Config\Config::create()
-    // use SYMFONY_LEVEL:
-    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
-    // and extra fixers:
-    ->fixers(array(
-        'concat_with_spaces',
-        'multiline_spaces_before_semicolon',
-        'short_array_syntax',
-        '-remove_lines_between_uses',
-        '-empty_return',
-        '-phpdoc_var_without_name',
-        '-phpdoc_to_comment',
-        '-single_line_after_imports',
-    ))
-    ->finder(
-        Symfony\CS\Finder\DefaultFinder::create()
-            ->in('src/')
-            ->in('tests/')
-    )
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('travis')
+    ->exclude('vendor')
+    ->in(__DIR__)
+;
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@PSR2' => true,
+        '@Symfony' => true,
+    ])
+    ->setFinder($finder)
 ;

@@ -3,7 +3,7 @@
 /*
  * This file is part of the RSQueue library
  *
- * Copyright (c) 2016 Marc Morera
+ * Copyright (c) 2016 - now() Marc Morera
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,15 +13,16 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
+declare(strict_types=1);
+
 namespace RSQueue\Command;
 
 use Redis;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 use RSQueue\Command\Abstracts\AbstractRSQueueCommand;
 use RSQueue\Exception\MethodNotFoundException;
 use RSQueue\Serializer\Serializer;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Abstract PSubscriber command.
@@ -98,7 +99,7 @@ abstract class PSubscriberCommand extends AbstractRSQueueCommand
     protected function execute(
         InputInterface $input,
         OutputInterface $output
-    ) : int {
+    ): int {
         $this->define();
 
         $patterns = array_keys($this->methods);
@@ -111,19 +112,18 @@ abstract class PSubscriberCommand extends AbstractRSQueueCommand
             ->redis
             ->psubscribe($patterns,
                 function ($redis, $pattern, $channel, $payloadSerialized) use ($input, $output) {
+                    $payload = $this->serializer->revert($payloadSerialized);
+                    $method = $this->methods[$pattern];
 
-                $payload = $this->serializer->revert($payloadSerialized);
-                $method = $this->methods[$pattern];
-
-                /*
-                 * All custom methods must have these parameters
-                 *
-                 * InputInterface  $input   An InputInterface instance
-                 * OutputInterface $output  An OutputInterface instance
-                 * Mixed           $payload Payload
-                 */
-                $this->$method($input, $output, $payload);
-            });
+                    /*
+                     * All custom methods must have these parameters
+                     *
+                     * InputInterface  $input   An InputInterface instance
+                     * OutputInterface $output  An OutputInterface instance
+                     * Mixed           $payload Payload
+                     */
+                    $this->$method($input, $output, $payload);
+                });
 
         $this->beforeDie();
 

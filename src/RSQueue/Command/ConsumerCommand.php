@@ -3,7 +3,7 @@
 /*
  * This file is part of the RSQueue library
  *
- * Copyright (c) 2016 Marc Morera
+ * Copyright (c) 2016 - now() Marc Morera
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,15 +13,16 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
-namespace RSQueue\Command;
+declare(strict_types=1);
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
+namespace RSQueue\Command;
 
 use RSQueue\Command\Abstracts\AbstractRSQueueCommand;
 use RSQueue\Exception\MethodNotFoundException;
 use RSQueue\Services\Consumer;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Abstract consumer command.
@@ -130,15 +131,15 @@ abstract class ConsumerCommand extends AbstractRSQueueCommand
      * Each time new payload is consumed from queue, consume() method is called.
      * When iterations get the limit, process literaly dies
      *
-     * @param  InputInterface  $input  An InputInterface instance
-     * @param  OutputInterface $output An OutputInterface instance
-     *                                  
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     *
      * @return int
      */
     protected function execute(
         InputInterface $input,
         OutputInterface $output
-    ) : int {
+    ): int {
         $this->define();
 
         $iterations = (int) $input->getOption('iterations');
