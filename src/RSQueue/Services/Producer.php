@@ -44,7 +44,7 @@ class Producer extends AbstractService
 
         $this
             ->redis
-            ->rpush(
+            ->rPush(
                 $queue,
                 $payloadSerialized
             );

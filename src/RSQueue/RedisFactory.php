@@ -13,9 +13,10 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
-namespace RSQueue\Factory;
+namespace RSQueue;
 
 use Redis;
+use RedisCluster;
 
 /**
  * Interface for any kind of serialization.
@@ -44,9 +45,31 @@ class RedisFactory
     /**
      * Generate new Predis instance.
      *
+     * @return Redis|RedisCluster
+     */
+    public function create()
+    {
+        return $this->config['cluster']
+            ? $this->createCluster()
+            : $this->createSimple();
+    }
+
+    /**
+     * Create cluster.
+     *
+     * @return RedisCluster
+     */
+    private function createCluster() : RedisCluster
+    {
+        return new RedisCluster(null, [$this->config['host'] . ':' . $this->config['port']]);
+    }
+
+    /**
+     * Create single redis.
+     *
      * @return Redis
      */
-    public function get()
+    private function createSimple() : Redis
     {
         $redis = new Redis();
         $redis->connect($this->config['host'], $this->config['port']);

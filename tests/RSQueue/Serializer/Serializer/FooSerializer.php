@@ -13,7 +13,7 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
-namespace RSQueue\Tests\Factory\Serializer;
+namespace RSQueue\Tests\Serializer\Serializer;
 
 /**
  * Implementation of example Serializer.

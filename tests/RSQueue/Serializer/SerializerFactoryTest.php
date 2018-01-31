@@ -13,11 +13,11 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
-namespace RSQueue\Tests\Factory;
+namespace RSQueue\Tests\Serializer;
 
 use RSQueue\Exception\SerializerNotFoundException;
 use RSQueue\Exception\SerializerNotImplementsInterfaceException;
-use RSQueue\Factory\SerializerFactory;
+use RSQueue\Serializer\SerializerFactory;
 
 /**
  * Tests SerializerFactory class.
@@ -30,7 +30,7 @@ class SerializerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testPHPGet()
     {
         $serializerFactory = new SerializerFactory('PHP');
-        $this->assertInstanceOf('\\RSQueue\\Serializer\\PHPSerializer', $serializerFactory->get());
+        $this->assertInstanceOf('\\RSQueue\\Serializer\\PHPSerializer', $serializerFactory->create());
     }
 
     /**
@@ -39,7 +39,7 @@ class SerializerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testJsonGet()
     {
         $serializerFactory = new SerializerFactory('Json');
-        $this->assertInstanceOf('\\RSQueue\\Serializer\\JsonSerializer', $serializerFactory->get());
+        $this->assertInstanceOf('\\RSQueue\\Serializer\\JsonSerializer', $serializerFactory->create());
     }
 
     /**
@@ -50,7 +50,7 @@ class SerializerFactoryTest extends \PHPUnit_Framework_TestCase
         $serializerFactory = new SerializerFactory('\\RSQueue\\Tests\\Factory\\Serializer\\EngongaSerializer');
 
         try {
-            $serializerFactory->get();
+            $serializerFactory->create();
         } catch (SerializerNotFoundException $expected) {
             return;
         }
@@ -64,7 +64,7 @@ class SerializerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testSimpleNotImplementingInterfaceFound()
     {
         $serializerFactory = new SerializerFactory('\\RSQueue\\Serializer\\PHPSerializer');
-        $this->assertInstanceOf('\\RSQueue\\Serializer\\PHPSerializer', $serializerFactory->get());
+        $this->assertInstanceOf('\\RSQueue\\Serializer\\PHPSerializer', $serializerFactory->create());
     }
 
     /**
@@ -72,10 +72,10 @@ class SerializerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testNotImplementingInterfaceFound()
     {
-        $serializerFactory = new SerializerFactory('\\RSQueue\\Tests\\Factory\\Serializer\\FooSerializer');
+        $serializerFactory = new SerializerFactory('\\RSQueue\\Tests\\Serializer\\Serializer\\FooSerializer');
 
         try {
-            $serializerFactory->get();
+            $serializerFactory->create();
         } catch (SerializerNotImplementsInterfaceException $expected) {
             return;
         }
