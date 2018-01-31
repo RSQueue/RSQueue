@@ -32,10 +32,10 @@ abstract class AbstractRSChannelEvent extends AbstractRSEvent
     /**
      * Construct method.
      *
-     * @param mixed  $payload
-     * @param string $payloadSerialized
-     * @param string $channelName
-     * @param Redis  $redis
+     * @param mixed              $payload
+     * @param string             $payloadSerialized
+     * @param string             $channelName
+     * @param Redis|RedisCluster $redis
      */
     public function __construct(
         $payload,

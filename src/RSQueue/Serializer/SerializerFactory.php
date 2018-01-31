@@ -13,11 +13,10 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
-namespace RSQueue\Factory;
+namespace RSQueue\Serializer;
 
 use RSQueue\Exception\SerializerNotFoundException;
 use RSQueue\Exception\SerializerNotImplementsInterfaceException;
-use RSQueue\Serializer\Serializer;
 
 /**
  * Interface for any kind of serialization.
@@ -49,7 +48,7 @@ class SerializerFactory
      * @throws SerializerNotFoundException
      * @throws SerializerNotImplementsInterfaceException
      */
-    public function get()
+    public function create()
     {
         if (class_exists($this->serializerType)) {
             if (in_array('RSQueue\\Serializer\\Serializer', class_implements($this->serializerType))) {

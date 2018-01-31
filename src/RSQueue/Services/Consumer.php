@@ -37,7 +37,7 @@ class Consumer extends AbstractService
      * @param mixed $queueAlias Alias of queue to consume from ( Can be an array of alias )
      * @param int   $timeout    Timeout. By default, 0
      *
-     * @return mixed payload unserialized
+     * @return array
      */
     public function consume($queueAlias, $timeout = 0)
     {

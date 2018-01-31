@@ -58,7 +58,7 @@ class AbstractService
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param Redis                    $redis
+     * @param Redis|RedisCluster       $redis
      * @param QueueAliasResolver       $queueAliasResolver
      * @param Serializer               $serializer
      *
@@ -66,7 +66,7 @@ class AbstractService
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        Redis $redis,
+        $redis,
         QueueAliasResolver $queueAliasResolver,
         Serializer $serializer
     ) {

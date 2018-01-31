@@ -57,12 +57,12 @@ abstract class PSubscriberCommand extends AbstractRSQueueCommand
     /**
      * PSubscriberCommand constructor.
      *
-     * @param Serializer $serializer
-     * @param Redis      $redis
+     * @param Serializer         $serializer
+     * @param Redis|RedisCluster $redis
      */
     public function __construct(
         Serializer $serializer,
-        Redis $redis
+        $redis
     ) {
         parent::__construct();
 

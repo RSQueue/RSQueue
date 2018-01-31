@@ -47,14 +47,14 @@ abstract class AbstractRSEvent extends Event
     /**
      * Construct method.
      *
-     * @param mixed  $payload
-     * @param string $payloadSerialized
-     * @param Redis  $redis
+     * @param mixed              $payload
+     * @param string             $payloadSerialized
+     * @param Redis|RedisCluster $redis
      */
     public function __construct(
         $payload,
         string $payloadSerialized,
-        Redis $redis
+        $redis
     ) {
         $this->payload = $payload;
         $this->payloadSerialized = $payloadSerialized;

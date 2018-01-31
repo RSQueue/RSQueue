@@ -79,13 +79,13 @@ abstract class SubscriberCommand extends AbstractRSQueueCommand
      * @param Serializer               $serializer
      * @param QueueAliasResolver       $queueAliasResolver
      * @param EventDispatcherInterface $eventDispatcher
-     * @param Redis                    $redis
+     * @param Redis|RedisCluster       $redis
      */
     public function __construct(
         Serializer $serializer,
         QueueAliasResolver $queueAliasResolver,
         EventDispatcherInterface $eventDispatcher,
-        Redis $redis
+        $redis
     ) {
         parent::__construct();
 
