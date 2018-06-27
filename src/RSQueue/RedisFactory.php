@@ -74,7 +74,7 @@ class RedisFactory
     private function createSimple(): Redis
     {
         $redis = new Redis();
-        $redis->connect($this->config['host'], $this->config['port']);
+        $redis->connect($this->config['host'], (int) $this->config['port']);
         $redis->setOption(Redis::OPT_READ_TIMEOUT, '-1');
         if ($this->config['database']) {
             $redis->select($this->config['database']);
