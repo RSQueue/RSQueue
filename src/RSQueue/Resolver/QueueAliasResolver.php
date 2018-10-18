@@ -63,12 +63,26 @@ class QueueAliasResolver
     /**
      * Return real queue name by defined QueueAlias.
      *
-     * @param string $queueAlias Queue alias
+     * @param string $queueAlias
      *
-     * @return string real queue name
+     * @return string
      */
-    public function getQueue($queueAlias): string
+    public function getQueue(string $queueAlias): string
     {
         return $this->queues[$queueAlias] ?? $queueAlias;
+    }
+
+    /**
+     * Return queue alias by queue name.
+     *
+     * @param string $queueName
+     *
+     * @return string
+     */
+    public function getQueueAliasByQueueName(string $queueName): string
+    {
+        return is_array($this->queues)
+            ? ((array_flip($this->queues)[$queueName]) ?? $queueName)
+            : $queueName;
     }
 }

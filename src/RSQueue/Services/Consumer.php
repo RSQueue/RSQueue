@@ -66,7 +66,7 @@ class Consumer extends AbstractService
         $payload = $this->serializer->revert($payloadSerialized);
         $givenQueueAlias = $this
             ->queueAliasResolver
-            ->getQueue($givenQueue);
+            ->getQueueAliasByQueueName($givenQueue);
 
         /*
          * Dispatching consumer event...

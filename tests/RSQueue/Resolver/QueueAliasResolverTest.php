@@ -53,4 +53,14 @@ class QueueAliasResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($queueAliasResolver->getQueue('myqueue2'), $this->queues['myqueue2']);
         $this->assertEquals($queueAliasResolver->getQueue('myqueue3'), 'myqueue3');
     }
+
+    /**
+     * Tests get queue alias by queue name.
+     */
+    public function testGetQueueAliasByQueueName()
+    {
+        $queueAliasResolver = new QueueAliasResolver($this->queues);
+        $this->assertEquals($queueAliasResolver->getQueueAliasByQueueName($this->queues['myqueue1']), 'myqueue1');
+        $this->assertEquals($queueAliasResolver->getQueueAliasByQueueName('myqueue3'), 'myqueue3');
+    }
 }
