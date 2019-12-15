@@ -1,0 +1,27 @@
+language: php
+
+dist: precise
+sudo: false
+
+git:
+    depth: 1
+
+matrix:
+    fast_finish: true
+    include:
+        - php: 7.0
+        - php: 7.0
+          env: dependencies=lowest
+        - php: 7.1
+        - php: 7.2
+
+cache:
+    directories:
+        - $HOME/.composer
+
+install:
+    - composer install --prefer-dist --optimize-autoloader --classmap-authoritative --no-interaction --no-scripts
+    - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --optimize-autoloader --classmap-authoritative --no-interaction --no-scripts; fi;
+
+script:
+    - ./vendor/bin/phpunit
